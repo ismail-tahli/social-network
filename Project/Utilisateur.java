@@ -9,6 +9,7 @@ import util.Contract;
  *      getFirstName() != null
  *     	!getFirstName().equals("")
  *      getAge() > 0
+ *      getFullName() = getFirstName() + " " + getName()
  * 		</pre>
  * 
  * @cons
@@ -102,13 +103,13 @@ public class Utilisateur  extends Sommet{
 	
 	public boolean follow (Sommet s) {
 		Contract.checkCondition(s != null 
-				,"Somme s invalide !\n");
+				,"Sommet s invalide !\n");
 		return addSommet(s);
 	}
 	
 	public boolean unfollow (Sommet s) {
 		Contract.checkCondition(s != null && getFollowList().contains(s)
-				,"Somme s invalide ou n'est pas déjà followed !\n");
+				,"Sommet s invalide ou n'est pas followed !\n");
 		return removeSommet(s);
 	}
 	
