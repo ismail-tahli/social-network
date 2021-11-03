@@ -1,9 +1,8 @@
-
-### Projet d’algorithmes sur les graphes
+# Projet d’algorithmes sur les graphes
 
 ## Les réseaux sociaux
 
-# 1 Contexte
+### Contexte
 Les réseaux sociaux en ligne ont connu un essor spectaculaire ces dernières
 années, et les entreprises se sont appropriées ce concepts pour des applica-
 tions plus ciblées comme le travail collaboratif, la recherche de compétences
@@ -31,7 +30,7 @@ réseau social (simpliﬁé) de type Facebook. Pour mettre en place cette étude
 nous utiliserons quelques notions de théorie des graphes qui vont nous 
 permettre de représenter ces réseaux et de les analyser eﬃcacement.
 
-#2 Modélisation du graphe
+### Modélisation du graphe
 On considère un réseau social. Les utilisateurs de ce réseau créent des
 comptes de deux types : Utilisateur, Page. Les comptes sont représentés
 par des sommets dans ce graphe. Chaque compte de type Utilisateur peut
@@ -44,7 +43,7 @@ sommet y dans le graphe. La relation x aime y , avec x un compte
 Utilisateur et y un compte Page est représentée par un arc du sommet x vers le
 sommet y dans le graphe.
 
-# Références
+### Références
 
 [1]Sciences et Avenir, ”Facebook envoie les citoyens aux urnes”, Septembre
 2012,
