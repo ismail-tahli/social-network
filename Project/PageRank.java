@@ -20,6 +20,25 @@ import util.Contract;
  */
 class PageRank {
 
+	//ATTRIBUTS
+	private Map<Sommet, Double> pageRank;
+	private Map<Sommet, Set<Sommet>> pred;
+	
+
+
+	//CONSTRUCTEURS
+	/**
+	 * Un PageRanker qui calcule l'ensemble s. N'a pas effectué de calcul, il n'a
+	 * que initialisé sa HashMap pour les PageRank.
+	 * 
+	 */
+	private PageRank(Set<Sommet> s) {
+		pageRank = new HashMap<Sommet, Double>();
+		for (Sommet c : s) {
+			pageRank.put(c, 1.);
+		}
+	}
+	
 	/**
 	 * La seule methode accessible. renvoie une Map qui associe a chaque sommet, le
 	 * PageRank associé. A noté que le comportement n'est pas défini si un sommet
@@ -48,29 +67,6 @@ class PageRank {
 	 * pageRank.size(); directement. Il manque les Contracts. Le reste je valide )
 	 */
 	
-	//ATTRIBUTS
-	private Map<Sommet, Double> pageRank;
-	private Map<Sommet, Set<Sommet>> pred;
-	
-
-
-	//CONSTRUCTEURS
-	/**
-	 * Un PageRanker qui calcule l'ensemble s. N'a pas effectué de calcul, il n'a
-	 * que initialisé sa HashMap pour les PageRank.
-	 * 
-	 */
-	private PageRank(Set<Sommet> s) {
-		pageRank = new HashMap<Sommet, Double>();
-		for (Sommet c : s) {
-			pageRank.put(c, 1.);
-		}
-	}
-	
-	/*
-	 * La Méthode compute qui retourne le degré de chaque sommet du graphe
-	 * dans une map.
-	 */
 	public static Map<Sommet, Double> compute(Set<Sommet> set) {
 		Contract.checkCondition(set != null, "compute AS Error");
 		//Initialiaser le pageRank à 1.
