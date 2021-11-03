@@ -29,10 +29,11 @@ import util.Contract;
  * 				d'age a et d'une collection de follow set.
  * 		$ARGS$ String n, String p, int a, Collection<? extends Sommet> set
  * 		$PRE$
- *         p != null && !p.equals("") && a > 0
+ *         p != null && !p.equals("") && a > 0 && set != null
  *     	$POST$
  *         getName().equals(n)
- *         getFollowList() == set
+ *         forall(s) in set
+ *             getFollowList().contains(s)
  *         getFollowList().size() = set.size()
  *         getFirstName() == p
  *         getAge() == a
