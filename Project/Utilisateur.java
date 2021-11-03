@@ -49,14 +49,15 @@ public class Utilisateur  extends Sommet{
 	//CONSTRUCTEURS
 	Utilisateur(String n, String p, int a){
 		super(n);
-		Contract.checkCondition(a > 0 && p != null && !p.equals(""),
-				"Prénom ou age invalide !\n");
-		firstName = p;
-		age = a;
+		initConstructor(p, a);
 	}
 	
 	Utilisateur(String n,Collection<? extends Sommet> set, String p, int a){
 		super(n,set);
+		initConstructor(p, a);
+	}
+	// Factorisation
+	private void initConstructor(String p, int a) {
 		Contract.checkCondition(a > 0 && p != null && !p.equals(""),
 				"Prénom ou age invalide !\n");
 		firstName = p;
