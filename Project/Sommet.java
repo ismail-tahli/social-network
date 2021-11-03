@@ -29,7 +29,8 @@ import util.Contract;
  *         nom != null && !nom.equals("") && set != null
  *     	$POST$
  *         getName().equals(nom)
- *         getFollowList() == set
+ *         forall(s) in set
+ *             getFollowList().contains(s)
  *         getFollowList().size() = set.size()
  * </pre>
  * 
