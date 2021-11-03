@@ -49,23 +49,6 @@ class PageRank {
 	 * 
 	 * @pre set != null
 	 */
-
-	/*
-	 * set.size() > 0 n'est pas vraiment necessaire (la methode ne renvoie jamais
-	 * une valeur négative (Seulement *dans des cas ou il y a plusieurs threads
-	 * c'est pas le notre) et s'il est vide ce n'est pas grave de le *prendre comme
-	 * meme en parametre. Les attributs vaut mieux que leur type source soit la
-	 * super interface et pas la classe, donc ça sera des Map mais qu'on initliase
-	 * en HashMap et en plus c'est mieux si tu l'initalise, parce que ta Map pred
-	 * n'est initiliasé nulle part. private Map<Sommet, Double> pageRank = new
-	 * HashMap<Sommet, Double>(); initPred ne réduit pas le temps de calcul c'est
-	 * seulement que c'est plus propre et qu'elle prepare la Map avant.(A mon avis).
-	 * Ca sera mieuc si tu mets ton appel pred.put(s, p); après le for même si on
-	 * obtiens la même chose mais c'est plus compréhensible. Ta boucle
-	 * doHundredLoops() i"<="100 pour que tu obtiens 100 itérations. pour
-	 * pageRank.keySet().size() tu pourrais faire plus façile je pense
-	 * pageRank.size(); directement. Il manque les Contracts. Le reste je valide )
-	 */
 	
 	public static Map<Sommet, Double> compute(Set<Sommet> set) {
 		Contract.checkCondition(set != null, "compute AS Error");
