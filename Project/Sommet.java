@@ -78,9 +78,6 @@ public abstract class Sommet  {
 	//COMMANDES
 
 	//OUTILS
-		public int compareTo(Sommet other) { //Pour le tri par nom
-			return this.getName().compareTo(other.getName());
-		}
 		//Fonction d'ajout au Set<Sommet> follow
 		protected boolean addSommet(Sommet s) {
 			assert s != null ;
