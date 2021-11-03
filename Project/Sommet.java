@@ -8,12 +8,11 @@ import util.Contract;
  *      getName() != null
  * 		!getName().equals("")
  * 		getFollowList() != null
- * 		getFollowList().size() >= 0
  * 		</pre>
  * 
  * @cons
  * <pre>
- * 		$DESC$ Un sommet de name "nom".
+ * 		$DESC$ Un sommet de nom "nom".
  * 		$ARGS$ String nom
  * 		$PRE$
  *         nom != null && !nom.equals("")
@@ -53,9 +52,9 @@ public abstract class Sommet  {
 	}
 	
 	Sommet(String nom, Collection<? extends Sommet> set){
-		Contract.checkCondition(nom != null && !nom.equals("") && set != null,
-				"Le nom ou le set follow est invalide !\n");
-		name = nom;
+		Sommet(nom);
+		Contract.checkCondition(set != null,
+				"Le set follow est invalide !\n");
 		follow.addAll(set);
 	}
 		
