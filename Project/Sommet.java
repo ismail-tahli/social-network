@@ -52,7 +52,7 @@ public abstract class Sommet  {
 	}
 	
 	Sommet(String nom, Collection<? extends Sommet> set){
-		Sommet(nom);
+		this(nom);
 		Contract.checkCondition(set != null,
 				"Le set follow est invalide !\n");
 		follow.addAll(set);
