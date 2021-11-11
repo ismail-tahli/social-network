@@ -26,7 +26,9 @@ import util.Contract;
 	   * 	getPageSet() != null && getPageSet().size() >= 0
 	   * 	getSommets() != null 
 	   * 	getSommets().size() == getUtilisateurSet().size() + getPageSet().size()
-	   * 	getArcsSet() != null && getArcsSet() > 0
+	   * 	getArcsSet() != null
+	   *    forall a in getArcsSet():
+	   *        
 	   *  </pre>
 	   * 
 	   * @cons
@@ -234,6 +236,8 @@ import util.Contract;
 	
 	  //Outils
 	  
+	  // Trie les sommets dans les deux Set interne en fonction de si ils sont
+	  // des Page ou des Utilisateur.
 	  private void initialize(Collection < ? extends Sommet > s) {
 	    for (Sommet sommet: s) {
 	      if (sommet instanceof Utilisateur) {
