@@ -28,6 +28,8 @@ import util.Contract;
 	   * 	getSommets().size() == getUtilisateurSet().size() + getPageSet().size()
 	   * 	getArcsSet() != null
 	   *    forall a in getArcsSet():
+	   *
+	   *    avgAge() == sum(u.age) / getUtilisateurNb() forall u in getUtilisateurSet()
 	   *        
 	   *  </pre>
 	   * 
@@ -142,9 +144,12 @@ import util.Contract;
 	  
 	  /*
 	   * L'age moyen de tous les utilisateurs
+	   * @pre
+	   *     getUtilisateurNb.size() > 0
 	   */
 	  
 	  public int avgAge() {
+		Contract.checkCondition(getUtilisateurNb.size() > 0, "avgAge AS Error");
 	    int sum = 0;
 	    for (Utilisateur u: getUtilisateurSet()) {
 	      sum += u.getAge();
