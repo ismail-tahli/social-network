@@ -240,7 +240,38 @@ import util.Contract;
 	    arc.src.unfollow(arc.dest);
 	    return arcSet.remove(arc);
 	  }
-	
+	  
+	/*
+	   * Rajoute le sommet s au graphe.
+	   * 
+	   * @pre 
+	   * 	s != null
+	   * 	forall d in s.getFollowList() 
+	   * 		getSommets().contains(d)
+	   * 
+	   * 	s instanceof Utilisateur || s instanceof Page
+	   * 
+	   * TO DO ---- SI LE NOM EST PRIS ON RAJOUTE PAS
+	   * @post 
+	   * 	getSommets().contains(s)
+	   */
+	  public boolean addSommet(Sommet s) {
+		  Contract.checkCondition(s != null, "addSommet AS Error: null sommet");
+		  if (s instanceof Page) {
+			  return pageSet.add((Page) s);
+		  }
+		  if (s instanceof Utilisateur) {
+			  boolean result = utilisateurSet.add((Utilisateur) s);
+			  for(Sommet d : s.getFollowList()) {
+				  Contract.checkCondition(getSommets().contains(d), "addSommet AS Error: d not in graphe");
+				  addArc((Utilisateur) s, d);
+			  }
+			  return result;
+		  }
+		  Contract.checkCondition(false, "addSommet AS Error: Sommet type not supported");
+		  return false;
+	  }
+	  
 	  //Outils
 	  
 	  // Trie les sommets dans les deux Set interne en fonction de si ils sont
