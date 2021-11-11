@@ -221,6 +221,7 @@ import util.Contract;
 	  public boolean addArc(Utilisateur u, Sommet s) {
 	    Contract.checkCondition(u != null && s != null && pageSet.contains(s) && utilisateurSet.contains(u),
 	      "L'utilisateur u ou sommet s est invalide.");
+		u.follow(s);
 	    return arcSet.add(new Arcs(u, s));
 	  }
 	
@@ -231,6 +232,7 @@ import util.Contract;
 	  public boolean removeArc(Arcs arc) {
 	    Contract.checkCondition(arcSet.contains(arc),
 	      "arc n'existe pas dans arcSet.");
+	    arc.src.unfollow(arc.dest);
 	    return arcSet.remove(arc);
 	  }
 	
