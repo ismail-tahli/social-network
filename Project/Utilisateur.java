@@ -9,6 +9,7 @@ import util.Contract;
  *      getFirstName() != null
  *     	!getFirstName().equals("")
  *      getAge() > 0
+ *      getFullName() = getFirstName() + " " + getName()
  * 		</pre>
  * 
  * @cons
@@ -29,10 +30,11 @@ import util.Contract;
  * 				d'age a et d'une collection de follow set.
  * 		$ARGS$ String n, String p, int a, Collection<? extends Sommet> set
  * 		$PRE$
- *         p != null && !p.equals("") && a > 0
+ *         p != null && !p.equals("") && a > 0 && set != null
  *     	$POST$
  *         getName().equals(n)
- *         getFollowList() == set
+ *         forall(s) in set
+ *             getFollowList().contains(s)
  *         getFollowList().size() = set.size()
  *         getFirstName() == p
  *         getAge() == a
@@ -47,14 +49,15 @@ public class Utilisateur  extends Sommet{
 	//CONSTRUCTEURS
 	Utilisateur(String n, String p, int a){
 		super(n);
-		Contract.checkCondition(a > 0 && p != null && !p.equals(""),
-				"Prénom ou age invalide !\n");
-		firstName = p;
-		age = a;
+		initConstructor(p, a);
 	}
 	
 	Utilisateur(String n,Collection<? extends Sommet> set, String p, int a){
 		super(n,set);
+		initConstructor(p, a);
+	}
+	// Factorisation
+	private void initConstructor(String p, int a) {
 		Contract.checkCondition(a > 0 && p != null && !p.equals(""),
 				"Prénom ou age invalide !\n");
 		firstName = p;
@@ -101,13 +104,13 @@ public class Utilisateur  extends Sommet{
 	
 	public boolean follow (Sommet s) {
 		Contract.checkCondition(s != null 
-				,"Somme s invalide !\n");
+				,"Sommet s invalide !\n");
 		return addSommet(s);
 	}
 	
 	public boolean unfollow (Sommet s) {
 		Contract.checkCondition(s != null && getFollowList().contains(s)
-				,"Somme s invalide ou n'est pas déjà followed !\n");
+				,"Sommet s invalide ou n'est pas followed !\n");
 		return removeSommet(s);
 	}
 	

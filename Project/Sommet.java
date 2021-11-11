@@ -29,7 +29,8 @@ import util.Contract;
  *         nom != null && !nom.equals("") && set != null
  *     	$POST$
  *         getName().equals(nom)
- *         getFollowList() == set
+ *         forall(s) in set
+ *             getFollowList().contains(s)
  *         getFollowList().size() = set.size()
  * </pre>
  * 
@@ -78,9 +79,6 @@ public abstract class Sommet  {
 	//COMMANDES
 
 	//OUTILS
-		public int compareTo(Sommet other) { //Pour le tri par nom
-			return this.getName().compareTo(other.getName());
-		}
 		//Fonction d'ajout au Set<Sommet> follow
 		protected boolean addSommet(Sommet s) {
 			assert s != null ;
