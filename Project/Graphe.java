@@ -25,7 +25,11 @@ import util.Contract;
 	   * 	getUtilisateurSet() != null && getPageSet() != null
 	   * 	getSommets() != null 
 	   * 	getSommets().size() == getUtilisateurSet().size() + getPageSet().size()
-	   * 	getArcsSet() != null && getArcsSet() > 0
+	   * 	getArcsSet() != null
+	   *    forall a in getArcsSet():
+	   *
+	   *    avgAge() == sum(u.age) / getUtilisateurNb() forall u in getUtilisateurSet()
+	   *        
 	   *  </pre>
 	   * 
 	   * @cons
@@ -139,9 +143,12 @@ import util.Contract;
 	  
 	  /*
 	   * L'age moyen de tous les utilisateurs
+	   * @pre
+	   *     getUtilisateurNb.size() > 0
 	   */
 	  
 	  public int avgAge() {
+		Contract.checkCondition(getUtilisateurNb.size() > 0, "avgAge AS Error");
 	    int sum = 0;
 	    for (Utilisateur u: getUtilisateurSet()) {
 	      sum += u.getAge();
@@ -218,6 +225,7 @@ import util.Contract;
 	  public boolean addArc(Utilisateur u, Sommet s) {
 	    Contract.checkCondition(u != null && s != null && pageSet.contains(s) && utilisateurSet.contains(u),
 	      "L'utilisateur u ou sommet s est invalide.");
+		u.follow(s);
 	    return arcSet.add(new Arcs(u, s));
 	  }
 	
@@ -228,11 +236,45 @@ import util.Contract;
 	  public boolean removeArc(Arcs arc) {
 	    Contract.checkCondition(arcSet.contains(arc),
 	      "arc n'existe pas dans arcSet.");
+	    arc.src.unfollow(arc.dest);
 	    return arcSet.remove(arc);
 	  }
-	
+	  
+	/*
+	   * Rajoute le sommet s au graphe.
+	   * 
+	   * @pre 
+	   * 	s != null
+	   * 	forall d in s.getFollowList() 
+	   * 		getSommets().contains(d)
+	   * 
+	   * 	s instanceof Utilisateur || s instanceof Page
+	   * 
+	   * TO DO ---- SI LE NOM EST PRIS ON RAJOUTE PAS
+	   * @post 
+	   * 	getSommets().contains(s)
+	   */
+	  public boolean addSommet(Sommet s) {
+		  Contract.checkCondition(s != null, "addSommet AS Error: null sommet");
+		  if (s instanceof Page) {
+			  return pageSet.add((Page) s);
+		  }
+		  if (s instanceof Utilisateur) {
+			  boolean result = utilisateurSet.add((Utilisateur) s);
+			  for(Sommet d : s.getFollowList()) {
+				  Contract.checkCondition(getSommets().contains(d), "addSommet AS Error: d not in graphe");
+				  addArc((Utilisateur) s, d);
+			  }
+			  return result;
+		  }
+		  Contract.checkCondition(false, "addSommet AS Error: Sommet type not supported");
+		  return false;
+	  }
+	  
 	  //Outils
 	  
+	  // Trie les sommets dans les deux Set interne en fonction de si ils sont
+	  // des Page ou des Utilisateur.
 	  private void initialize(Collection < ? extends Sommet > s) {
 	    for (Sommet sommet: s) {
 	      if (sommet instanceof Utilisateur) {
