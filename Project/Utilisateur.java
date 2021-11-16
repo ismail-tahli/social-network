@@ -1,6 +1,5 @@
 package Project;
 import java.util.Collection;
-//import java.util.Set;
 
 import util.Contract;
 /**
@@ -105,13 +104,13 @@ public class Utilisateur  extends Sommet{
 	public boolean follow (Sommet s) {
 		Contract.checkCondition(s != null 
 				,"Sommet s invalide !\n");
-		return addSommet(s);
+		return addNeighbor(s);
 	}
 	
 	public boolean unfollow (Sommet s) {
 		Contract.checkCondition(s != null && getFollowList().contains(s)
 				,"Sommet s invalide ou n'est pas followed !\n");
-		return removeSommet(s);
+		return removeNeighbor(s);
 	}
 	
 }
