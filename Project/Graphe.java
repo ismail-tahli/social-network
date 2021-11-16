@@ -22,8 +22,7 @@ import util.Contract;
 	   * 
 	   * @inv 
 	   *  <pre>
-	   * 	getUtilisateurSet() != null, getUtilisateurSet().size() >= 0
-	   * 	getPageSet() != null && getPageSet().size() >= 0
+	   * 	getUtilisateurSet() != null && getPageSet() != null
 	   * 	getSommets() != null 
 	   * 	getSommets().size() == getUtilisateurSet().size() + getPageSet().size()
 	   * 	getArcsSet() != null && getArcsSet() > 0

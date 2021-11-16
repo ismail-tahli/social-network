@@ -9,7 +9,6 @@ import util.Contract;
  * @inv 
  *      <pre>
  *      getAdmins != null
- *      getAdmins.size() >= 0
  *      getFollowList().size() == 0
  * 		</pre>
  * 
