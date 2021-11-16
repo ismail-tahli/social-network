@@ -215,6 +215,19 @@ import util.Contract;
 		  Collections.sort(list, comp);
 		  return list;
 	  } 
+	   /* Retourne le sommet de nom 'name' si il existe,
+		*  Retourne null sinon
+		* @pre <pre>
+		*  name != null </pre>
+		*/
+		public Sommet getVerticeByName(String name) {
+			for (Sommet s : sommetSet) {
+				if (s.getName().equals(name)) {
+					return s;
+				}
+			}
+			return null;
+		}
 	  
 	  //COMMANDES
 	  

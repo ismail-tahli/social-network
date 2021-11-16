@@ -79,15 +79,22 @@ public abstract class Sommet  {
 	//COMMANDES
 
 	//OUTILS
-		//Fonction d'ajout au Set<Sommet> follow
-		protected boolean addSommet(Sommet s) {
+		//Fonction d'ajout d'un voisin sortant
+		protected boolean addNeighbor(Sommet s) {
 			assert s != null ;
 			return follow.add(s);
 		}
-		//Fonction de retrait au Set<Sommet> follow		
-		protected boolean removeSommet(Sommet s) {
+		//Fonction de retrait d'un voisin sortant
+		protected boolean removeNeighbor(Sommet s) {
 			assert s != null ;
 			return follow.remove(s);
+		}
+		/** Supprime tous les voisins sortants de ce sommet
+		* @post <pre>
+		*  getFollowList().size() == 0 </pre> 
+		*/
+		public void removeAllNeighbors() {
+			follow.clear();
 		}
 
 }
