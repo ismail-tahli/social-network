@@ -144,11 +144,11 @@ import util.Contract;
 	  /*
 	   * L'age moyen de tous les utilisateurs
 	   * @pre
-	   *     getUtilisateurNb.size() > 0
+	   *     getUtilisateurNb() > 0
 	   */
 	  
 	  public int avgAge() {
-		Contract.checkCondition(getUtilisateurNb.size() > 0, "avgAge AS Error");
+		Contract.checkCondition(getUtilisateurNb() > 0, "avgAge AS Error");
 	    int sum = 0;
 	    for (Utilisateur u: getUtilisateurSet()) {
 	      sum += u.getAge();
