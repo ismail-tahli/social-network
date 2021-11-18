@@ -236,7 +236,7 @@ import util.Contract;
 	   */
 	
 	  public boolean addArc(Utilisateur u, Sommet s) {
-	    Contract.checkCondition(u != null && s != null && pageSet.contains(s) && utilisateurSet.contains(u),
+	    Contract.checkCondition(u != null && s != null && pageSet.contains(s) && sommetSet.contains(u),
 	      "L'utilisateur u ou sommet s est invalide.");
 		u.follow(s);
 	    return arcSet.add(new Arcs(u, s));
