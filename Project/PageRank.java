@@ -20,6 +20,17 @@ import util.Contract;
  */
 class PageRank {
 
+	/**
+	 * La seule methode accessible. renvoie une Map qui associe a chaque sommet, le
+	 * PageRank associé. A noté que le comportement n'est pas défini si un sommet
+	 * pointe sur un sommet qui n'est pas dans cette ensemble.
+	 * 
+	 * Il est conseillé de ne pas appeler cette fonction intempestivement car le
+	 * temps de calcul peut etre long.
+	 * 
+	 * @pre set != null
+	 */
+	
 	//ATTRIBUTS
 	private Map<Sommet, Double> pageRank;
 	private Map<Sommet, Set<Sommet>> pred;
@@ -35,6 +46,7 @@ class PageRank {
 	private PageRank(Set<Sommet> s) {
 		pageRank = new HashMap<Sommet, Double>();
 		for (Sommet c : s) {
+			Contract.checkCondition(c != null, "Erreur PageRank Constructeur : Le sommet est invalide");
 			pageRank.put(c, 1.);
 		}
 	}
@@ -64,8 +76,9 @@ class PageRank {
 	 * Initie les listes des predecesseur pour chaque sommet.
 	 */
 	private void initPred() {
+		pred = new HashMap<Sommet, Set<Sommet>>();
 		for (Sommet s : pageRank.keySet()) {
-			HashSet<Sommet> p = new HashSet<Sommet>();
+			Set<Sommet> p = new HashSet<Sommet>();
 			for (Sommet c : pageRank.keySet()) {
 				if (c.getFollowList().contains(s)) {
 					p.add(c);
