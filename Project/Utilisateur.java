@@ -1,5 +1,6 @@
 package Project;
 import java.util.Collection;
+import java.util.Iterator;
 
 import util.Contract;
 /**
@@ -40,10 +41,13 @@ import util.Contract;
  * </pre>
  */
 
-public class Utilisateur  extends Sommet{
+
+public class Utilisateur extends Sommet{
 	//ATTRIBUTS
 	private String firstName;
 	private int age;
+	
+	//CONSTRUCTEURS
 	
 	//CONSTRUCTEURS
 	Utilisateur(String n, String p, int a){
@@ -89,6 +93,10 @@ public class Utilisateur  extends Sommet{
 		return getName() + " " + getFirstName();
 	}
 	
+    public String toString() {
+        return getFullName();
+    }
+    
 	//COMMANDES
 	public void setAge(int n) {
 		Contract.checkCondition(n > 0 /*&& n != age*/
@@ -103,14 +111,31 @@ public class Utilisateur  extends Sommet{
 	
 	public boolean follow (Sommet s) {
 		Contract.checkCondition(s != null 
-				,"Sommet s invalide !\n");
-		return addNeighbor(s);
+				,"Somme s invalide !\n");
+		return addSommet(s);
 	}
 	
 	public boolean unfollow (Sommet s) {
 		Contract.checkCondition(s != null && getFollowList().contains(s)
-				,"Sommet s invalide ou n'est pas followed !\n");
-		return removeNeighbor(s);
+				,"Somme s invalide ou n'est pas déjà followed !\n");
+		return removeSommet(s);
 	}
-	
+    /*
+     * Retourne les noms des sommets voisins sortants sous forme de chaîne de caractères 
+    */
+    public String getFollowsNames() {
+        String str = "";
+        
+        Iterator<Sommet> it = getFollowList().iterator();
+        
+        if (it.hasNext()) {
+            str = it.next().getName();
+            
+            while (it.hasNext()) {
+                str += ", " + it.next().getName();
+            }
+        }
+        
+        return str;
+    }
 }
