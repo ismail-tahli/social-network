@@ -234,7 +234,7 @@ public class AppGraph {
     
     private void showPage(Page p) {
     	String strInfo = "Nom: " + p.getName()
-        + "\nAdmins: " + p.getAdmins().toString();
+        + "\nAdmins: " + p.getAdmins().toString()
         + "\nPage Rank: " + model.pageRank().get(p);
 
     	showInfoDialog(strInfo, "Infos de la page " + p.getName());
@@ -351,7 +351,7 @@ public class AppGraph {
 
         findField.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Sommet s = model.find(findField.getText());
+        		Sommet s = model.getVerticesByName(findField.getText());
         		if (s != null) {
         			if (s instanceof Utilisateur) {
         				showUser((Utilisateur) s);
