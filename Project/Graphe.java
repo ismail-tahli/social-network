@@ -404,7 +404,7 @@ import util.Contract;
 	     *  s != null </pre>
 	     */
 	    public void computeSmallestDistanceFrom(Sommet s) {
-	        Contract.checkCondition(s != null);
+	        Contract.checkCondition(s != null, "computeSmallestDistanceFrom AS Error");
 	        
 	        // Initialisation des distances entre chaque sommet et la source à 10000000
 	        for (Sommet u : sommetSet) {
@@ -448,7 +448,7 @@ import util.Contract;
 	     */
 	    
 	    public void saveGraph(File file) throws IOException {
-	        Contract.checkCondition(file != null);
+	        Contract.checkCondition(file != null, "saveGraph AS Error");
 	        
 	        PrintWriter output = new PrintWriter(new FileWriter(file));
 	        
@@ -496,7 +496,7 @@ import util.Contract;
 	    */
 	    
 	    public void loadGraph(File file) throws IOException, BadSyntaxException {
-	        Contract.checkCondition(file != null);
+	        Contract.checkCondition(file != null, "loadGraph AS Error");
 	        
 	        this.clear();
 	        
