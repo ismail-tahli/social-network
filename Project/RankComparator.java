@@ -12,15 +12,16 @@ public class RankComparator implements Comparator<Sommet>{
 	private Map<Sommet, Double> degree;
 	//Importer la map contenant les degrees pour pouvoir
 	//trier les sommets selon leur degree.
-	public void ValueComparator(Map<Sommet, Double> d) {
+	public RankComparator(Map<Sommet, Double> d) {
+		assert d != null;
         degree = d;
-    }
+
+	}
 	@Override
 	//On utilisant la compareTo de Double
 	public int compare(Sommet arg0, Sommet arg1) {
 		//La methodes static compareTo de la Classe Double retourne -1,0,1 selon les cas.
-		return degree.get(arg0).compareTo(degree.get(arg1));
-		//return (int) (degree.get(arg0) - degree.get(arg1));
+		return degree.get(arg1).compareTo(degree.get(arg0));
 	}
-	//La je me rends compte qu'il faut quand on bosse un peu plus sur le projet.
+	
 }
