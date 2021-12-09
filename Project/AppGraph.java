@@ -60,6 +60,9 @@ public class AppGraph {
     private JButton verticesSortedByDegree;
     private JButton verticesSortedByPageRank;
     private JButton edgesButton;
+
+    private JTextField findField;
+    private JTextField avgAgeField;
     
     private JMenuItem load;
     private JMenuItem save;
@@ -126,6 +129,10 @@ public class AppGraph {
         verticesSortedByDegree = new JButton("Ensemble des sommets triés par degré sortant");
         verticesSortedByPageRank = new JButton("Ensemble des sommets triés par PageRank");
         edgesButton = new JButton("Ensemble des arcs");
+        findField = new JTextField(10);
+        avgAgeField = new JTextField(3);
+        avgAgeField.setEditable(false);
+
         fileChooser = new JFileChooser();
         
         load = new JMenuItem("Charger");
@@ -183,15 +190,14 @@ public class AppGraph {
                     q.add(verticesSortedByDegree);
                     q.add(verticesSortedByPageRank);
                     q.add(edgesButton);
-                   // q.add(saveGraph);
                     JPanel z = new JPanel(); {
                         z.add(new JLabel("Trouver "));
-                     //   z.add(findField);
+                        z.add(findField);
                     }
                     q.add(z);
                     z = new JPanel(); {
                         z.add(new JLabel("Âge moyen : "));
-                       // z.add(avgAgeField);
+                        z.add(avgAgeField);
                     }
                     q.add(z);
             }
@@ -215,6 +221,25 @@ public class AppGraph {
         mainFrame.setJMenuBar(menu);     
     }
     
+    // Factorisation pour montrer des sommets
+    private void showUser(Utilisateur u) {
+        String Info = "Nom: " + u.getFullName() 
+                    + "\nAge: " + u.getAge() 
+                    + "\nSuit: " + u.getFollowList().toString() 
+                    + "\nPage Rank: " + model.pageRank().get(u)
+                    + "\nDegré sortant: " + u.getFollowList().size();
+        
+        showInfoDialog(Info, "Infos de " + u.getFullName());
+    }
+    
+    private void showPage(Page p) {
+    	String strInfo = "Nom: " + p.getName()
+        + "\nAdmins: " + p.getAdmins().toString();
+        + "\nPage Rank: " + model.pageRank().get(p);
+
+    	showInfoDialog(strInfo, "Infos de la page " + p.getName());
+    }
+
     // Création du controlleur
     private void createController() {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -310,14 +335,7 @@ public class AppGraph {
             public void actionPerformed(ActionEvent e) {
                 Sommet s = userList.getSelectedValue();
                 if (s != null) {
-                	Utilisateur u = ((Utilisateur) s); 
-                    String Info = "Nom: " + u.getFullName() 
-	                            + "\nAge: " + u.getAge() 
-	                            + "\nSuit: " + u.getFollowList().toString() 
-	                            + "\nPage Rank: " + model.pageRank().get(u)
-	                            + "\nDegré sortant: " + u.getFollowList().size();
-                    
-                    showInfoDialog(Info, "Infos de " + u.getFullName());
+                	showUser((Utilisateur) s);
                 }
             }
         });
@@ -326,13 +344,22 @@ public class AppGraph {
             public void actionPerformed(ActionEvent e) {
                 Sommet s = pageList.getSelectedValue();
                 if (s != null) {
-                    String strInfo = "Nom: " + s.getName()
-		                            + "\nAdmins: " + ((Page) s).getAdmins().toString()
-		                            + "\nPage Rank: " + model.pageRank().get(s);
-		                 
-                    showInfoDialog(strInfo, "Infos de la page " + s.getName());
+                    showPage((Page) s);
                 }
             }
+        });
+
+        findField.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Sommet s = model.find(findField.getText());
+        		if (s != null) {
+        			if (s instanceof Utilisateur) {
+        				showUser((Utilisateur) s);
+        			} else {
+        				showPage((Page) s);
+        			}
+        		}
+        	}
         });
         
         followButton.addActionListener(new ActionListener() {
@@ -557,6 +584,11 @@ public class AppGraph {
         	}
         }
         
+        avgAgeField.setText("");
+        if (model.getUtilisateurNb() > 0) {
+        	avgAgeField.setText(String.valueOf(model.avgAge()));
+        }
+
         for (Sommet s : model.getSommets()) {
             if (s instanceof Utilisateur) {
                 userListModel.addElement((Utilisateur) s);
