@@ -9,7 +9,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -60,6 +62,7 @@ public class AppGraph {
     private JButton verticesSortedByDegree;
     private JButton verticesSortedByPageRank;
     private JButton edgesButton;
+    private JButton listAdjButton;
 
     private JTextField findField;
     private JTextField avgAgeField;
@@ -129,6 +132,7 @@ public class AppGraph {
         verticesSortedByDegree = new JButton("Ensemble des sommets triés par degré sortant");
         verticesSortedByPageRank = new JButton("Ensemble des sommets triés par PageRank");
         edgesButton = new JButton("Ensemble des arcs");
+        listAdjButton = new JButton("La liste d'adjacence");
         findField = new JTextField(10);
         avgAgeField = new JTextField(3);
         avgAgeField.setEditable(false);
@@ -190,6 +194,7 @@ public class AppGraph {
                     q.add(verticesSortedByDegree);
                     q.add(verticesSortedByPageRank);
                     q.add(edgesButton);
+                    q.add(listAdjButton);
                     JPanel z = new JPanel(); {
                         z.add(new JLabel("Trouver "));
                         z.add(findField);
@@ -351,7 +356,7 @@ public class AppGraph {
 
         findField.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		Sommet s = model.getVerticesByName(findField.getText());
+        		Sommet s = model.getVerticeByName(findField.getText());
         		if (s != null) {
         			if (s instanceof Utilisateur) {
         				showUser((Utilisateur) s);
@@ -551,8 +556,22 @@ public class AppGraph {
         
         verticesSortedByPageRank.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	// <!> A revoir
                 showInfoDialog(model.sortedByRank().toString(), "Sommets triés par PageRank");
+            }
+        });
+        
+        listAdjButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	//Calcule la liste d'adjacence
+        		model.adjListInit(model.getSommets());
+            	StringBuilder listAdj = new StringBuilder("");
+            	for(Sommet s : model.getSommets()) {
+            		listAdj.append(s);
+            		listAdj.append(":");
+            		listAdj.append(model.getListAdj().get(s));
+            		listAdj.append("\n");
+            	}
+                showInfoDialog(listAdj.toString(), "La liste d'adjacence");
             }
         });
         
@@ -574,11 +593,13 @@ public class AppGraph {
     	verticesSortedByDegree.setEnabled(false);
     	verticesSortedByPageRank.setEnabled(false);
     	edgesButton.setEnabled(false);
+    	listAdjButton.setEnabled(false);
     	
         if(model.getSommetNb() > 0) {
         	verticesSortedByName.setEnabled(true);
         	verticesSortedByDegree.setEnabled(true);
         	verticesSortedByPageRank.setEnabled(true);
+        	listAdjButton.setEnabled(true);
         	if(model.arcsNb() > 0) {
         		edgesButton.setEnabled(true);
         	}
