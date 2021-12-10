@@ -1,7 +1,6 @@
 package Project;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -9,9 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -65,6 +62,7 @@ public class AppGraph {
     private JButton listAdjButton;
 
     private JTextField findField;
+    private JTextField sourceField;
     private JTextField avgAgeField;
     
     private JMenuItem load;
@@ -134,6 +132,7 @@ public class AppGraph {
         edgesButton = new JButton("Ensemble des arcs");
         listAdjButton = new JButton("La liste d'adjacence");
         findField = new JTextField(10);
+        sourceField = new JTextField(10);
         avgAgeField = new JTextField(3);
         avgAgeField.setEditable(false);
 
@@ -196,8 +195,13 @@ public class AppGraph {
                     q.add(edgesButton);
                     q.add(listAdjButton);
                     JPanel z = new JPanel(); {
-                        z.add(new JLabel("Trouver "));
+                        z.add(new JLabel("Trouver : "));
                         z.add(findField);
+                    }
+                    q.add(z);
+                    z = new JPanel(); {
+                        z.add(new JLabel("Distance de : "));
+                        z.add(sourceField);
                     }
                     q.add(z);
                     z = new JPanel(); {
@@ -366,6 +370,22 @@ public class AppGraph {
         		}
         	}
         });
+        sourceField.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Sommet s = model.getVerticeByName(sourceField.getText());
+    			StringBuilder str = new StringBuilder("");
+        		if(s != null) {
+        			model.computeSmallestDistanceFrom(s);
+        			for(Sommet sommet : model.getSommets()) {
+        				str.append(sommet);
+        				str.append(" ==> ");
+        				str.append(sommet.getDistance(s));
+        				str.append("\n");
+        			}
+            		showInfoDialog(str.toString(), "Les distances de "+s.getName()+" à tous les sommets.");
+        		}
+        	}
+        });
         
         followButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -531,7 +551,7 @@ public class AppGraph {
         about.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showInfoDialog("Projet de Graphe\nUniversité de ROUEN", "About AppGraph");
+				showInfoDialog("Projet de Graphe\nUniversité de ROUEN\nProgrammé par :\n Ismail TAHLI \n Thomas Romeyer \n Youssef Myje", "About AppGraph");
 			}	
         });
         
