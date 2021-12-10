@@ -183,6 +183,9 @@ import util.Contract;
 	    return new HashSet < Arcs > (arcSet);
 	  }
 	  
+	  public Map<Sommet, LinkedList<Sommet>> getListAdj() {
+		  return new HashMap<Sommet, LinkedList<Sommet>>(listAdj);
+	  }
 	  /*
 	   * L'age moyen de tous les utilisateurs
 	   * @pre
@@ -404,15 +407,15 @@ import util.Contract;
 	     *  s != null </pre>
 	     */
 	    public void computeSmallestDistanceFrom(Sommet s) {
-	        Contract.checkCondition(s != null, "computeSmallestDistanceFrom AS Error");
-	        
+	        Contract.checkCondition(s != null);
+	        s.clearDistance();
 	        // Initialisation des distances entre chaque sommet et la source à 10000000
 	        for (Sommet u : sommetSet) {
 	            u.setDistance(s, 10000000);
 	        }
 	        
 	        // Initialisation de la distance de s à 0
-	        s.clearDistance();
+	        s.setDistance(s, 0);
 	        
 	        // p prend l'ensemble des sommets du graphe
 	        Set<Sommet> p = new HashSet<Sommet>(sommetSet);
@@ -424,7 +427,6 @@ import util.Contract;
 	            if (u != null) {
 	                // On supprime u de p
 	                p.remove(u);
-	        
 	                for (Sommet v : u.getFollowList()) {
 	                    int alt = u.getDistance(s) + 1;
 	                    if (alt <= v.getDistance(s)) {
@@ -448,7 +450,7 @@ import util.Contract;
 	     */
 	    
 	    public void saveGraph(File file) throws IOException {
-	        Contract.checkCondition(file != null, "saveGraph AS Error");
+	        Contract.checkCondition(file != null);
 	        
 	        PrintWriter output = new PrintWriter(new FileWriter(file));
 	        
@@ -496,7 +498,7 @@ import util.Contract;
 	    */
 	    
 	    public void loadGraph(File file) throws IOException, BadSyntaxException {
-	        Contract.checkCondition(file != null, "loadGraph AS Error");
+	        Contract.checkCondition(file != null);
 	        
 	        this.clear();
 	        
@@ -586,7 +588,11 @@ import util.Contract;
 	                }
 	            } else {
 	                for (String name : neighborsMap.get(s)) {
-	                    ((Page) s).addAdmin((Utilisateur) getVerticeByName(name));
+	                	Utilisateur u = (Utilisateur) getVerticeByName(name); 
+	                	if(u != null) {
+		                    ((Page) s).addAdmin(u);
+
+	                	}
 	                }
 	            }
 	        }
@@ -614,7 +620,7 @@ import util.Contract;
 		    }
 		  }
 		  //Calcule la liste d'adjacence
-		  private void adjListInit(Collection < ? extends Sommet > s) {
+		  public void adjListInit(Collection < ? extends Sommet > s) {
 			  listAdj = new HashMap<Sommet, LinkedList<Sommet>>();
 			  LinkedList<Sommet> succ;
 			  for (Sommet sommet: s) {
@@ -622,6 +628,7 @@ import util.Contract;
 				  listAdj.put(sommet, succ);
 			  }
 		  }
+		  
 	  private Sommet getClosestVertice(Sommet s, Set<Sommet> verticesSet) {
 	        Sommet result = null;
 	        int dist;
