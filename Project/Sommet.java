@@ -113,7 +113,8 @@ public abstract class Sommet  {
      */
     public void clearDistance() {
         distance.clear();
-    }		
+    }
+    		
 	
 	//COMMANDES
 
