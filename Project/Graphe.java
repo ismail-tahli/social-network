@@ -63,13 +63,6 @@ import util.Contract;
 		   *  </pre>
 		   */
 	    // CONSTANTES
-	    
-	    /*private static final Pattern REGEX_USER 
-	        = Pattern.compile("^\\{name = (?<name>.+), firstname = (?<firstname>.+), age = (?<age>[0-9]+), neighbors = \\[(?<neighbors>((\\W+, )+\\W+)|\\W*)\\]\\}$");
-	    
-	    private static final Pattern REGEX_PAGE 
-	        = Pattern.compile("^\\{name = (?<name>.+), admins = \\[(?<admins>((\\W+, )+\\W)|\\W*)\\]\\}$");
-	      */
 		
 	    /*
 	     * .+ Match un ensemble (de taille > 0) des caractères sauf le saut de ligne.
