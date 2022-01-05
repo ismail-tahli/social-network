@@ -13,7 +13,7 @@ import java.util.Set;
 import util.Contract;
 
 /**
- * @author devr0s
+ * @author ismail
  *
  */
 	public class Graphe {
